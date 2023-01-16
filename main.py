@@ -43,6 +43,7 @@ class City(Sprite):
 
 
 DISPLAY = pygame.display.set_mode((1200, 800))
+pygame.display.set_caption("Karellen's Reign - CCS1 - David Reeves")
 CLOCK = pygame.time.Clock()
 FONT_MEDIUM = pygame.font.Font("assets/MartianMono-Regular.ttf", 20)
 FONT_LARGE = pygame.font.Font("assets/MartianMono-Regular.ttf", 32)
@@ -267,8 +268,9 @@ actionMarker = pygame.image.load("assets/actionToken.png")
 
 
 nextTurnHold = 0
-
+quit = False
 while True:
+	
     if(gameState == "won"):
         
         DISPLAY.blit(winBg, (0, 0))
@@ -279,6 +281,9 @@ while True:
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 pygame.quit()
+                quit = True
+        if(quit):
+            break
     elif(gameState == "game"):
         DISPLAY.blit(background, (-100, 0))
         DISPLAY.blit(dimBg, (0, 0))
@@ -286,7 +291,8 @@ while True:
         for event in events:
             if(event.type == pygame.QUIT):
                 pygame.quit()
-            if(event.type == pygame.MOUSEBUTTONDOWN):
+                quit = True
+            elif(event.type == pygame.MOUSEBUTTONDOWN):
                 
                 
                 pos = pygame.mouse.get_pos()
@@ -339,7 +345,8 @@ while True:
                         nextTurnHold = -10000
                         actionsLeft = 3
                         currentPolicy = None
-        
+        if(quit):
+            break
         # KEYBOARD
         
         keys = pygame.key.get_pressed()
